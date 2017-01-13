@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/menu_blod" android:title="@string/menu_myBlob" android:icon="@drawable/ic_myblob" android:checked="true"></item>
+    <item android:id="@+id/menu_article" android:title="@string/menu_myArticle" android:icon="@drawable/ic_myarticle" ></item>
+    <item android:id="@+id/menu_album" android:title="@string/menu_myAlbum" android:icon="@drawable/ic_myalbum"></item>
+    <item android:id="@+id/menu_download" android:title="@string/menu_myDownload" android:icon="@drawable/ic_mydownload"></item>
+    <item android:id="@+id/menu_message" android:title="@string/menu_myMessage" android:icon="@drawable/ic_mymessage"></item>
+    <item android:id="@+id/menu_myinfos" android:title="@string/menu_myInfos" android:icon="@drawable/ic_myinfo"></item>
+
+</group>
+</menu>

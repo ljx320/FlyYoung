@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/article_catalog_size"
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="@dimen/article_catalog_size"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bloblist_item_showImage"
+            android:layout_margin="4dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/article_catalog_margin"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bloblist_item_date"
+                android:textSize="@dimen/sencondary_val"
+                />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/blob_wetaher"
+                android:layout_height="@dimen/blob_wetaher"
+                android:id="@+id/bloblist_item_weather"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bloblist_item_blobContent"
+            android:textColor="@color/blobTitle"
+            android:padding="@dimen/article_catalog_margin"
+            />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:id="@+id/aritcleInfos_toolbar"
+        >
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/blob_item_margin"
+        >
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blobTitle"
+        android:text="文章标题"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_margin="@dimen/blob_item_margin"
+        android:id="@+id/articleInfos_Title"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/article_catalog_size"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/articleInfos_Date"
+            android:text="2017-01-13 09:33"
+            android:layout_marginRight="@dimen/blob_item_margin"
+            android:textSize="@dimen/article_catalog_size"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/articleInfos_ReadCount"
+            android:text="0"
+            android:textSize="@dimen/article_catalog_size"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/articleInfos_Content"
+        android:layout_marginTop="@dimen/article_catalog_size"
+        android:text="文章内容"
+        android:padding="@dimen/blob_item_margin"
+        android:autoLink="web"
+
+        />
+
+
+</LinearLayout>
+
+
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>
