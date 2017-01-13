@@ -22,4 +22,10 @@
     <string name="albums_toolBarTile">我的相册</string>
     <string name="downloads_toolBarTitle">我的下载</string>
     <string name="messages_toolBarTitle">我的留言</string>
+
+    <string name="addblob_sureButton">发布</string>
+    <string name="addblob_ToolBar">添加点滴</string>
+    <string name="addblob_ConentHint">你想说点什么..</string>
+
+    <string name="addblob_weatherName">天气状况:</string>
 </resources>

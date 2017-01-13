@@ -13,6 +13,9 @@
     <dimen name="sencondary_val">10dp</dimen>
 
     <dimen name="blob_wetaher">20dp</dimen>
+    <dimen name="blob_AddButton">64dp</dimen>
+
+    <dimen name="blob_SelectedImage">160dp</dimen>
 
 
 </resources>

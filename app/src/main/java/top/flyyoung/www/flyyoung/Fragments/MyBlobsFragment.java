@@ -8,6 +8,8 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import top.flyyoung.www.flyyoung.Adapters.BlobsAdapter;
 import top.flyyoung.www.flyyoung.Datas.Blobs;
+import top.flyyoung.www.flyyoung.MainActivity;
 import top.flyyoung.www.flyyoung.R;
 import top.flyyoung.www.flyyoung.Utils.HttpUtil;
 
@@ -156,7 +159,16 @@ public class MyBlobsFragment extends Fragment {
         BlobsFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"添加点滴",Toast.LENGTH_SHORT).show();
+
+                MainActivity mainActivity=(MainActivity) getActivity();
+
+                FragmentManager fragmentManager=mainActivity.getSupportFragmentManager();
+                FragmentTransaction transaction=fragmentManager.beginTransaction();
+                AddBlobFragment blobFragment=new AddBlobFragment();
+                transaction.replace(R.id.main_frameLayout,blobFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
             }
         });
         LoadBlobs();
