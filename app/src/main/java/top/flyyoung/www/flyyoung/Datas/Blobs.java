@@ -2,6 +2,7 @@ package top.flyyoung.www.flyyoung.Datas;
 
 /**
  * Created by 69133 on 2017/1/12.
+ * Blob/Post
  */
 
 public class Blobs {
@@ -13,6 +14,7 @@ public class Blobs {
     private String BlobImage;
     private String BlobContent;
     private boolean ShowCustomer;
+    private String BlobLocation;
 
     public void setWeather(String weather) {
         Weather = weather;
@@ -72,4 +74,11 @@ public class Blobs {
         return ShowCustomer;
     }
 
+    public String getBlobLocation() {
+        return BlobLocation;
+    }
+
+    public void setBlobLocation(String blobLocation) {
+        BlobLocation = blobLocation;
+    }
 }

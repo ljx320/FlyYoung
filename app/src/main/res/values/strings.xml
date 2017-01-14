@@ -28,4 +28,10 @@
     <string name="addblob_ConentHint">你想说点什么..</string>
 
     <string name="addblob_weatherName">天气状况:</string>
+    <string name="Addblob_WarnigNoContent">不要着急，先说点什么吧</string>
+    <string name="Addblob_WarnigNoImage">哎哟，没有图片不行哦</string>
+    <string name="Addblob_fromAlbum">相册</string>
+    <string name="Addblob_fromCamera">相机</string>
+    <string name="Addblob_makeSuccess">点滴发布成功了</string>
+    <string name="Addblob_makeFailed">点滴发布失败了</string>
 </resources>

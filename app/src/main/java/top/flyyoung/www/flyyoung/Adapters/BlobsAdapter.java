@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.w3c.dom.Text;
 
@@ -51,9 +53,18 @@ public class BlobsAdapter extends RecyclerView.Adapter<BlobsAdapter.ViewHolder> 
 
         Blobs blob=mBlobs.get(position);
 
+        if (blob.getBlobLocation().isEmpty()){
+
+            holder.blobLocationContainer.setVisibility(View.GONE);
+        }
+        holder.blobLocation.setText(blob.getBlobLocation().toString());
         holder.blobContent.setText(blob.getBlobContent().toString());
         holder.blobCreateDate.setText(blob.getCreateDate().toString()+" "+blob.getCreateTime().toString());
-        Glide.with(mContext).load(HttpUtil.WEBHOST+blob.getBlobImage()).into(holder.blobShowImage);
+
+
+
+        Glide.with(mContext).load(HttpUtil.WEBHOST+blob.getBlobImage()).animate(android.R.anim.slide_in_left).thumbnail(0.1f).into(holder.blobShowImage);
+
         Glide.with(mContext).load(blob.getWeather()).into(holder.blobWeatherImage);
 
     }
@@ -73,6 +84,8 @@ public class BlobsAdapter extends RecyclerView.Adapter<BlobsAdapter.ViewHolder> 
         ImageView blobWeatherImage;
         TextView blobCreateDate;
         TextView blobContent;
+        TextView blobLocation;
+        LinearLayout blobLocationContainer;
 
         public ViewHolder(View view){
             super(view);
@@ -81,7 +94,8 @@ public class BlobsAdapter extends RecyclerView.Adapter<BlobsAdapter.ViewHolder> 
             blobWeatherImage=(ImageView)view.findViewById(R.id.bloblist_item_weather);
             blobCreateDate=(TextView)view.findViewById(R.id.bloblist_item_date);
             blobContent=(TextView)view.findViewById(R.id.bloblist_item_blobContent);
-
+            blobLocation=(TextView)view.findViewById(R.id.bloblist_Item_location);
+            blobLocationContainer=(LinearLayout)view.findViewById(R.id.bloblist_LocationContainer);
 
         }
 

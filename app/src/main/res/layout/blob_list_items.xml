@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bloblist_item_showImage"
+            android:src="@drawable/ic_thumbnail"
             android:layout_margin="4dp"
             />
 
@@ -40,6 +41,31 @@
                 android:layout_height="@dimen/blob_wetaher"
                 android:id="@+id/bloblist_item_weather"
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/article_catalog_margin"
+            android:id="@+id/bloblist_LocationContainer"
+            >
+            <ImageView
+                android:layout_width="@dimen/activity_horizontal_margin"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:id="@+id/bloblist_Item_location"
+                android:textSize="@dimen/sencondary_val"
+                android:layout_marginLeft="@dimen/article_catalog_size"
                 />
 
         </LinearLayout>

@@ -5,6 +5,7 @@
    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/article_catalog_size"
+    android:id="@+id/photo_list_cardView"
     >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"

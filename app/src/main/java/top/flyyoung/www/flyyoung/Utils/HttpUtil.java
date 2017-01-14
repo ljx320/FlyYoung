@@ -1,6 +1,7 @@
 package top.flyyoung.www.flyyoung.Utils;
 
 import java.io.File;
+import java.util.Date;
 
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -33,6 +34,9 @@ public class HttpUtil {
 
     public static  void uploadMultiFile(String address,String filePath,Callback callback){
         String webAddress = WEBHOST_ADDRESS + address;
+
+
+
         File file=new File(filePath);
         RequestBody fileBody=RequestBody.create(MediaType.parse("application/octet-stream"),file);
         RequestBody requestBody=new MultipartBody.Builder()
@@ -48,6 +52,15 @@ public class HttpUtil {
         OkHttpClient client = new OkHttpClient();
         client.newCall(request).enqueue(callback);
 
+
+    }
+
+    public static void PostJson(String address,String json,Callback callback){
+        String webAddress = WEBHOST_ADDRESS + address;
+        OkHttpClient okHttpClient=new OkHttpClient();
+        RequestBody requestBody=RequestBody.create(MediaType.parse("application/json"),json);
+        Request request=new Request.Builder().url(webAddress).post(requestBody).build();
+        okHttpClient.newCall(request).enqueue(callback);
 
     }
 

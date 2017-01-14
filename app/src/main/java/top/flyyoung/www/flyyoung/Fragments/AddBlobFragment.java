@@ -9,18 +9,25 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,16 +38,23 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import top.flyyoung.www.flyyoung.Datas.Blobs;
+import top.flyyoung.www.flyyoung.Datas.UploadFileResult;
 import top.flyyoung.www.flyyoung.R;
 import top.flyyoung.www.flyyoung.Utils.HttpUtil;
 
@@ -52,19 +66,30 @@ public class AddBlobFragment extends Fragment {
 
     private Toolbar mAddBlobToolbar;
     private Button mAddBlobSureButton;
+    private Button mAddBlobImageCamera;
 private ImageView mAddBlobWeatherImage;
     private TextView mAddBlobMyLocation;
 private TextView mAddBlobWeatherVal;
     private LocationClient mLocationClient;
     private Button mAdBlobAddImageButton;
-
+private EditText mAddBlobContent;
     private Context mContext;
     private Activity mActivity;
 
     private  String mWeatherImage;
     private ImageView mAddBlobSelectedImage;
 
+    private final int TAKE_PHOTO=7;
     private final  int CHOOSE_PHOTO=6;
+    private final  int RESUL_OK=-1;
+    private Uri imageUri;
+
+    private Bitmap mBlobShowImage;
+
+    private List<UploadFileResult>  mBlobShowImageResult;
+    private String mBlobShowImageVal;
+
+    private Boolean PostBlobResult;
 
     @Nullable
     @Override
@@ -79,7 +104,8 @@ private TextView mAddBlobWeatherVal;
         mAddBlobToolbar.setTitleTextColor(Color.WHITE);
         mAddBlobWeatherImage=(ImageView)view.findViewById(R.id.addBlob_weatherImage);
         mAddBlobSelectedImage=(ImageView)view.findViewById(R.id.addblob_SelectedImage);
-
+        mAddBlobImageCamera=(Button)view.findViewById(R.id.addblob_ImageCamera);
+        mAddBlobContent=(EditText)view.findViewById(R.id.addblob_blobContent);
         mContext=getContext();
         mActivity=getActivity();
 
@@ -92,6 +118,39 @@ private TextView mAddBlobWeatherVal;
                 openAlbum();
             }
         });
+
+        mAddBlobImageCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File outputImage=new File(getActivity().getExternalCacheDir(),"out_put.jpg");
+                try{
+                    if (outputImage.exists()){
+
+                        outputImage.delete();
+                    }
+                    outputImage.createNewFile();
+
+                }catch (IOException e){
+
+                    e.printStackTrace();
+                }
+
+                if (Build.VERSION.SDK_INT>=24){
+
+                    imageUri= FileProvider.getUriForFile(getActivity(),"top.flyyoung.www.flyyoung.fileprovider",outputImage);
+                }else
+                {
+                    imageUri=Uri.fromFile(outputImage);
+
+                }
+
+                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+                startActivityForResult(intent,TAKE_PHOTO);
+            }
+        });
+
+
 
         LoadWeatherImage();
 
@@ -125,35 +184,261 @@ private TextView mAddBlobWeatherVal;
 
         }
 
+        mAddBlobSureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String blobContent=mAddBlobContent.getText().toString();
 
+                if ("".equals(blobContent)){
+
+                    Toast.makeText(getActivity(),R.string.Addblob_WarnigNoContent,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (mBlobShowImage==null){
+                    Toast.makeText(getActivity(),R.string.Addblob_WarnigNoImage,Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
+               String filePath= getBitmapPath(mBlobShowImage);
+                String address="Blob/PostImage";
+
+               HttpUtil.uploadMultiFile(address, filePath, new Callback() {
+                   @Override
+                   public void onFailure(Call call, IOException e) {
+
+                   }
+
+                   @Override
+                   public void onResponse(Call call, Response response) throws IOException {
+        if (response.isSuccessful()){
+            String responseResult=response.body().string();
+          //  Log.d("result", responseResult);
+            mBlobShowImageResult=new Gson().fromJson(responseResult,new TypeToken<List<UploadFileResult>>(){}.getType());
+             new ImageUploadFinishiTask().execute();
+        }
+                       else {
+
+
+        }
+                   }
+               });
+
+
+            }
+        });
 
 
         return view;
     }
 
+
+    class  ImageUploadFinishiTask extends  AsyncTask<Void,Integer,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+
+
+            for (UploadFileResult result :mBlobShowImageResult){
+                mBlobShowImageVal=result.getName();
+
+            }
+
+            if (!mBlobShowImageVal.isEmpty()){
+
+                PostInfosToService();
+            }
+
+           // Toast.makeText(getActivity(),mBlobShowImageVal,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+private  void InfosClear(){
+
+    mAddBlobContent.setText("");
+    mAddBlobSelectedImage.setVisibility(View.GONE);
+
+}
+    private  void PostInfosToService()
+    {
+        Blobs blob=new Blobs();
+        blob.setBlobContent(mAddBlobContent.getText().toString());
+        blob.setBlobImage(mBlobShowImageVal);
+
+        SimpleDateFormat dateString=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeString=new SimpleDateFormat("HH:mm");
+
+
+        blob.setCreateDate(dateString.format(new Date()));
+        blob.setCreateTime(timeString.format(new Date()));
+
+        blob.setID(0);
+        blob.setShowCustomer(true);
+        blob.setWeather(mAddBlobWeatherVal.getText().toString());
+        blob.setBlobLocation(mAddBlobMyLocation.getText().toString());
+
+        String JsonResult=new Gson().toJson(blob,blob.getClass());
+
+        Log.d("blob", JsonResult);
+
+        HttpUtil.PostJson("Blob/Post", JsonResult, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("blobresult", "error");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+
+                    PostBlobResult=new Gson().fromJson(response.body().string(),Boolean.class);
+
+                    new PostBlobResultTask().execute();
+
+                }
+                else
+                {
+                    Log.d("blobresult", "failed");
+
+                }
+            }
+        });
+
+    }
+
+
+    class  PostBlobResultTask extends  AsyncTask<Void,Integer,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+           // super.onPostExecute(aBoolean);
+
+            if (PostBlobResult){
+
+Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).show();
+
+                InfosClear();
+
+            }
+            else
+            {
+                Toast.makeText(getActivity(),R.string.Addblob_makeFailed,Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
 
+
+
+
             case CHOOSE_PHOTO:
-                ContentResolver resolver=getContext().getContentResolver();
 
-                try{
-                    InputStream inputStream=resolver.openInputStream(data.getData());
-                    Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
+                if (resultCode==RESUL_OK){
 
-                    mAddBlobSelectedImage.setImageBitmap(bitmap);
-                    mAddBlobSelectedImage.setVisibility(View.VISIBLE);
+                    ContentResolver resolver=getContext().getContentResolver();
+
+                    try{
+                        InputStream inputStream=resolver.openInputStream(data.getData());
+                        mBlobShowImage= BitmapFactory.decodeStream(inputStream);
+
+                        mAddBlobSelectedImage.setImageBitmap(mBlobShowImage);
+                        mAddBlobSelectedImage.setVisibility(View.VISIBLE);
+
+
+                    }
+                    catch (FileNotFoundException e){
+
+                        e.printStackTrace();
+                    }
                 }
-                catch (FileNotFoundException e){
+
+
+
+                break;
+            case TAKE_PHOTO:
+
+
+                if (resultCode==RESUL_OK){
+                    ContentResolver resolver=getContext().getContentResolver();
+                    try{
+                        mBlobShowImage=BitmapFactory.decodeStream(resolver.openInputStream(imageUri));
+
+
+
+                        mAddBlobSelectedImage.setImageBitmap(mBlobShowImage);
+                        mAddBlobSelectedImage.setVisibility(View.VISIBLE);
+
+
+                    }
+                    catch (FileNotFoundException e){
+
+                        e.printStackTrace();
+                    }
+
+                }
+
+            default:
+        }
+    }
+
+
+    private String getBitmapPath(Bitmap bitmap){
+        String filePath="";
+        FileOutputStream fileOutputStream=null;
+
+        try{
+            String saveDir= Environment.getExternalStorageDirectory()+"/Blob_Photos";
+            File dir=new File(saveDir);
+
+            if (!dir.exists()){
+
+                dir.mkdir();
+            }
+
+            SimpleDateFormat t=new SimpleDateFormat("yyyyMMddhhmmssSSS");
+            String filename="BB"+(t.format(new Date()))+".jpg";
+            File file=new File(saveDir,filename);
+
+            fileOutputStream=new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
+            filePath=file.getPath();
+
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (fileOutputStream!=null){
+                try{
+                    fileOutputStream.close();
+                }
+                catch (Exception e){
 
                     e.printStackTrace();
                 }
 
+            }
 
-                break;
-            default:
+            return  filePath;
         }
+
     }
 
     private void openAlbum(){
