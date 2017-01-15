@@ -34,4 +34,7 @@
     <string name="Addblob_fromCamera">相机</string>
     <string name="Addblob_makeSuccess">点滴发布成功了</string>
     <string name="Addblob_makeFailed">点滴发布失败了</string>
+
+    <string name="AddPhoto_Toolbar">添加照片</string>
+
 </resources>

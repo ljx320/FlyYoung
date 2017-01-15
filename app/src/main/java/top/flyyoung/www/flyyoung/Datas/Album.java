@@ -3,6 +3,7 @@ package top.flyyoung.www.flyyoung.Datas;
 /**
  * Created by 69133 on 2017/1/13.
  * Album/get
+ * Album/Post
  */
 
 public class Album {

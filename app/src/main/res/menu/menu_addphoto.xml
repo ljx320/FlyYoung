@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item  android:title="@string/Addblob_fromCamera" android:icon="@drawable/ic_addphotocamera"  app:showAsAction="always"></item>
+    <item android:title="@string/Addblob_fromAlbum" android:icon="@drawable/ic_addphotoalbum" app:showAsAction="always"></item>
+    <item android:title="@string/addblob_sureButton" android:icon="@drawable/ic_addphotopublish" ></item>
+</menu>
