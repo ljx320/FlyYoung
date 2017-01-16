@@ -15,6 +15,7 @@ public class Article {
     private String CreateTime ;
     private String ArticleCatalog;
     private String ArticleContent;
+    private  Boolean ShowCustomer;
 
 
     public void setReadCount(int readCount) {
@@ -95,5 +96,13 @@ public class Article {
 
     public String getCreateTime() {
         return CreateTime;
+    }
+
+    public Boolean getShowCustomer() {
+        return ShowCustomer;
+    }
+
+    public void setShowCustomer(Boolean showCustomer) {
+        ShowCustomer = showCustomer;
     }
 }

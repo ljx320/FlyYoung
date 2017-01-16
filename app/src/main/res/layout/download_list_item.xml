@@ -47,6 +47,14 @@
             android:id="@+id/downloads_list_Date"
             />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/download_downloadButton"
+            android:id="@+id/downloads_downloadButton"
+            android:layout_marginTop="@dimen/article_catalog_size"
+            />
+
 
     </LinearLayout>
 

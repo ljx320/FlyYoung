@@ -20,9 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:padding="@dimen/edit_text_padding"
+        android:background="@drawable/edit_bg"
         android:hint="@string/login_telWaring"
         android:maxLines="1"
-        android:background="@drawable/edit_bg"
+
         android:id="@+id/login_tel_text"
         android:inputType="phone"
 

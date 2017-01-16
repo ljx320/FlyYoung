@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public class MyPhotosFragment extends Fragment {
                 FragmentTransaction transaction=fragmentManager.beginTransaction();
 
                 transaction.replace(R.id.main_frameLayout,addPhotoFragment);
-                transaction.addToBackStack(null);
+               // transaction.addToBackStack(null);
                 transaction.commit();
 
 
@@ -100,6 +101,8 @@ public class MyPhotosFragment extends Fragment {
     }
 
     private void LoadPhotos(){
+
+
 
         String address="Album/Get?id="+mAlbumID+"";
         HttpUtil.sendOkHttpRequest(address, new Callback() {

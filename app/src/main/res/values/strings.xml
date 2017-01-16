@@ -37,4 +37,35 @@
 
     <string name="AddPhoto_Toolbar">添加照片</string>
 
+    <string name="PhotoSelect_Toolbar">选择照片</string>
+    <string name="PhotoSelect_makeSure">选择照片</string>
+
+    <string name="Album_Name">相册名称</string>
+    <string name="Album_Description">相册描述</string>
+    <string name="Album_ShowCustomer">展示</string>
+    <string name="Album_Subject">选择主题</string>
+    <string name="Album_AddButton">添加相册</string>
+    <string name="Album_AlbumNameWaring">必须要输入相册名称才行哦</string>
+    <string name="Album_succes">相册添加成功了</string>
+    <string name="Album_failed">相册添加失败了</string>
+
+    <string name="download_name">文件名称</string>
+    <string name="download_version">文件版本</string>
+    <string name="download_description">文件名称</string>
+    <string name="download_path">选择文件</string>
+    <string name="download_showCustomer">允许下载</string>
+    <string name="download_makeSure">确定上传</string>
+    <string name="download_Toolbar">上传文件</string>
+
+    <string name="download_NameWarning">文件名称必须要填写哦</string>
+    <string name="download_DescriptionWarning">文件功能必须要填写哦</string>
+    <string name="download_FileWarning">必须要选择文件才行哦</string>
+
+    <string name="download_MakeFileSuccess">文件上传成功</string>
+    <string name="download_MakeFileFailed">文件上传失败</string>
+
+    <string name="download_downloadButton">下载</string>
+    <string name="download_downloadSucces">下载成功</string>
+
+    <string name="article_catalog_toolbar">选择分类</string>
 </resources>

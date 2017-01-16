@@ -19,6 +19,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.Toolbar;
@@ -49,12 +51,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import top.flyyoung.www.flyyoung.Datas.Blobs;
 import top.flyyoung.www.flyyoung.Datas.UploadFileResult;
+import top.flyyoung.www.flyyoung.MainActivity;
 import top.flyyoung.www.flyyoung.R;
 import top.flyyoung.www.flyyoung.Utils.HttpUtil;
 
@@ -328,6 +333,25 @@ private  void InfosClear(){
 Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).show();
 
                 InfosClear();
+//
+//                Timer timer=new Timer();
+//                TimerTask task=new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        MainActivity activity=(MainActivity)getActivity();
+//
+//                        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+//                        final FragmentTransaction trasaction = fragmentManager.beginTransaction();
+//
+//                        MyBlobsFragment   mBlobFragment = new MyBlobsFragment();
+//                        trasaction.replace(R.id.main_frameLayout, mBlobFragment);
+//                        trasaction.commit();
+//
+//
+//
+//                    }
+//                };
+//                timer.schedule(task,1000*1);
 
             }
             else
@@ -444,7 +468,7 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
     private void openAlbum(){
 
         Intent intent=new Intent("android.intent.action.GET_CONTENT");
-        intent.setType("image/*");
+        intent.setType("'application/octet-stream");
         startActivityForResult(intent,CHOOSE_PHOTO);
     }
 

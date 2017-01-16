@@ -43,6 +43,8 @@ public class PhotoLookFragment extends Fragment{
     private float rawX;
     private  float resultX;
 
+    private MainActivity mainActivity;
+
 
 
 
@@ -52,7 +54,7 @@ public class PhotoLookFragment extends Fragment{
         View view=inflater.inflate(R.layout.photo_look,container,false);
 
         mPhotoLookView=(ImageView) view.findViewById(R.id.photoLook);
-
+        mainActivity=(MainActivity) getActivity();
 
         MainActivity.MyTouchListener myOnTouchListener=new MainActivity.MyTouchListener(){
 
@@ -83,7 +85,7 @@ public class PhotoLookFragment extends Fragment{
 
                             }
                         }catch (Exception e){
-                            Toast.makeText(getActivity(),"已经没有照片了",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mainActivity,"已经没有照片了",Toast.LENGTH_SHORT).show();
                         }
 
 

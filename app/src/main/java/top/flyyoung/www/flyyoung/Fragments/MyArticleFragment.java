@@ -7,6 +7,8 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import okhttp3.Response;
 import top.flyyoung.www.flyyoung.Adapters.ArticlesAdapter;
 import top.flyyoung.www.flyyoung.Adapters.BlobsAdapter;
 import top.flyyoung.www.flyyoung.Datas.Article;
+import top.flyyoung.www.flyyoung.MainActivity;
 import top.flyyoung.www.flyyoung.R;
 import top.flyyoung.www.flyyoung.Utils.HttpUtil;
 
@@ -97,7 +100,16 @@ public class MyArticleFragment extends Fragment {
         ArticlesAddFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"添加文章",Toast.LENGTH_SHORT).show();
+                MainActivity activity=(MainActivity)getActivity();
+                FragmentManager fragmentManager=activity.getSupportFragmentManager();
+                FragmentTransaction transaction=fragmentManager.beginTransaction();
+
+                ArticleCatalogFragment fragment=new ArticleCatalogFragment();
+
+                transaction.replace(R.id.main_frameLayout,fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
             }
         });
 

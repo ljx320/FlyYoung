@@ -5,7 +5,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -27,6 +30,7 @@ import okhttp3.Response;
 import top.flyyoung.www.flyyoung.Adapters.AlbumsAdapter;
 import top.flyyoung.www.flyyoung.Datas.Album;
 import top.flyyoung.www.flyyoung.Datas.Message;
+import top.flyyoung.www.flyyoung.MainActivity;
 import top.flyyoung.www.flyyoung.R;
 import top.flyyoung.www.flyyoung.Utils.HttpUtil;
 
@@ -39,7 +43,7 @@ public class MyAlbumsFragment extends Fragment {
     private SwipeRefreshLayout mAlbumRefreshLayout;
     private RecyclerView mAlbumRecyclerView;
     private Toolbar mAlbumToolbar;
-
+private FloatingActionButton mAddAblumFAB;
     private List<Album> mAlbums;
 
     private  final  int MESSAGE_ID=5;
@@ -50,9 +54,26 @@ public class MyAlbumsFragment extends Fragment {
         mAlbumRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.album_SwipeRefreshLayout);
         mAlbumRecyclerView=(RecyclerView)view.findViewById(R.id.album_RecycleLayout);
         mAlbumToolbar=(Toolbar)view.findViewById(R.id.album_listToolbar);
-
+        mAddAblumFAB=(FloatingActionButton)view.findViewById(R.id.Albums_AddAlbum);
         mAlbumToolbar.setTitle(R.string.albums_toolBarTile);
         mAlbumToolbar.setTitleTextColor(Color.WHITE);
+
+
+        mAddAblumFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity=(MainActivity)getActivity();
+
+                FragmentManager fragmentManager=activity.getSupportFragmentManager();
+                FragmentTransaction transaction=fragmentManager.beginTransaction();
+
+                AddAlbumFragment albumFragment=new AddAlbumFragment();
+
+                transaction.replace(R.id.main_frameLayout,albumFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         LoadAlbums();
 

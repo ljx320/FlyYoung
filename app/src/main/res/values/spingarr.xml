@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="spingarr">
+        <item value="1">最爱</item>
+        <item value="2">人物</item>
+        <item value="3">风景</item>
+        <item value="4">动物</item>
+        <item value="5">游记</item>
+        <item value="6">卡通</item>
+        <item value="7">生活</item>
+        <item value="8">其他</item>
+
+    </string-array>
+
+</resources>

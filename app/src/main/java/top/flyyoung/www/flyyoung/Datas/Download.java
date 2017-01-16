@@ -3,6 +3,9 @@ package top.flyyoung.www.flyyoung.Datas;
 /**
  * Created by 69133 on 2017/1/13.
  * Download/get
+ * Download/Get?fileName=/Files/20170116/test.txt
+ * Download/PostFile
+ * Download/Post
  */
 
 public class Download {

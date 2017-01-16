@@ -2,21 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:id="@+id/addPhoto_Toolbar">
+        android:id="@+id/photoSelect_Toolbar"
+        ></android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/photoSelect_Recyclerview"
+        >
 
 
-    </android.support.v7.widget.Toolbar>
-<android.support.v7.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/addPhoto_RecyclerView"
-
-    ></android.support.v7.widget.RecyclerView>
-
-
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

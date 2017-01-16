@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -27,6 +29,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import top.flyyoung.www.flyyoung.Adapters.DownloadsAdapter;
 import top.flyyoung.www.flyyoung.Datas.Download;
+import top.flyyoung.www.flyyoung.MainActivity;
 import top.flyyoung.www.flyyoung.R;
 import top.flyyoung.www.flyyoung.Utils.HttpUtil;
 
@@ -52,6 +55,25 @@ private SwipeRefreshLayout mDownloadRefreshLayout;
         mDownloadToolbar=(Toolbar)view.findViewById(R.id.Downloads_Toolbar);
         mDownloadToolbar.setTitle(R.string.downloads_toolBarTitle);
         mDownloadToolbar.setTitleTextColor(Color.WHITE);
+        mDownloadFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MainActivity mainActivity=(MainActivity)getActivity();
+                FragmentManager fragmentManager=mainActivity.getSupportFragmentManager();
+                FragmentTransaction transaction=fragmentManager.beginTransaction();
+
+
+                AddDownloadFragment downloadFragment=new AddDownloadFragment();
+
+                transaction.replace(R.id.main_frameLayout,downloadFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+
+            }
+        });
+
         mDownloadRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -109,8 +131,9 @@ if (response.isSuccessful()){
             mDownloadRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
 
+            MainActivity mainActivity=(MainActivity) getActivity();
 
-            mDownloadRecyclerView.setAdapter(new DownloadsAdapter(mDownloads));
+            mDownloadRecyclerView.setAdapter(new DownloadsAdapter(mDownloads,mainActivity));
             mDownloadRefreshLayout.setRefreshing(false);
         }
     }
