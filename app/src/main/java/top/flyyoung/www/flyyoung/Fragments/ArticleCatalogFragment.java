@@ -4,7 +4,10 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +42,7 @@ public class ArticleCatalogFragment extends Fragment {
     private SwipeRefreshLayout mCatalogRefresh;
 
     private List<ArticleCatalog> mCatalogs;
+    private FloatingActionButton mCatalogAddButton;
 
     @Nullable
     @Override
@@ -47,7 +51,7 @@ public class ArticleCatalogFragment extends Fragment {
         mCatalogToolbar = (Toolbar) view.findViewById(R.id.Article_catalog_Toolbar);
         mCatalogRecycler = (RecyclerView) view.findViewById(R.id.Article_catalog_Recycler);
         mCatalogRefresh = (SwipeRefreshLayout) view.findViewById(R.id.Article_catalog_refresh);
-
+        mCatalogAddButton=(FloatingActionButton)view.findViewById(R.id.Article_catalog_add);
         mCatalogToolbar.setTitle(R.string.article_catalog_toolbar);
         mCatalogToolbar.setTitleTextColor(Color.WHITE);
 
@@ -59,6 +63,21 @@ public class ArticleCatalogFragment extends Fragment {
                 LoadCatalogs();
 
                 mCatalogRefresh.setRefreshing(false);
+            }
+        });
+
+        mCatalogAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity=(MainActivity)getActivity();
+                FragmentManager fragmentManager=mainActivity.getSupportFragmentManager();
+                FragmentTransaction transaction=fragmentManager.beginTransaction();
+
+                AddCatalogFragment catalogFragment=new AddCatalogFragment();
+                transaction.replace(R.id.main_frameLayout,catalogFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
             }
         });
 

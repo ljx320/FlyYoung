@@ -10,4 +10,179 @@
         android:id="@+id/addarticle_Toolbar"
         ></android.support.v7.widget.Toolbar>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="@dimen/edit_text_padding"
+        android:background="@drawable/edit_bg"
+        android:hint="@string/article_add_title"
+        android:maxLines="1"
+
+        android:id="@+id/addArticle_Title"
+        android:inputType="text"
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="@dimen/edit_text_padding"
+        android:background="@drawable/edit_bg"
+        android:hint="@string/article_add_Description"
+        android:maxLines="1"
+
+        android:id="@+id/addArticle_Description"
+        android:inputType="text"
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="@dimen/edit_text_padding"
+        android:background="@drawable/edit_bg"
+        android:hint="@string/article_add_keywoeds"
+        android:maxLines="1"
+
+        android:id="@+id/addArticle_KeyWords"
+        android:inputType="text"
+
+        />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bold"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_bold"
+
+            />
+
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_strikethrough"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_strikethrough"
+            />
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_underline"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_underline"
+            />
+
+
+
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bgcolor"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_bgcolor"
+            />
+
+
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_text_color"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_color"
+            />
+
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_blockquote"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_blockquote"
+            />
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_link"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_link"
+            />
+
+        <ImageView
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_addphotoalbum"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/article_action_picture"
+            />
+
+    </LinearLayout>
+
+
+
+    <jp.wasabeef.richeditor.RichEditor
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:id="@+id/addarticle_Content"
+        ></jp.wasabeef.richeditor.RichEditor>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addArticle_ShowImage"
+            android:text="@string/PhotoSelect_makeSure"
+            />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/addArticle_ShowImageView"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addArticle_ShowImageURL"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addArticle_ShowCustomer"
+        android:checked="true"
+        android:text="@string/article_add_showCustomer"
+        />
+
+
+
 </LinearLayout>

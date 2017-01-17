@@ -216,9 +216,11 @@ private EditText mAddBlobContent;
 
                    @Override
                    public void onResponse(Call call, Response response) throws IOException {
+
+                    //   Log.d("result", response.body().string());
         if (response.isSuccessful()){
-            String responseResult=response.body().string();
-          //  Log.d("result", responseResult);
+               String responseResult=response.body().string();
+//           Log.d("result", responseResult);
             mBlobShowImageResult=new Gson().fromJson(responseResult,new TypeToken<List<UploadFileResult>>(){}.getType());
              new ImageUploadFinishiTask().execute();
         }
@@ -252,12 +254,14 @@ private EditText mAddBlobContent;
             for (UploadFileResult result :mBlobShowImageResult){
                 mBlobShowImageVal=result.getName();
 
+                if (!mBlobShowImageVal.isEmpty()){
+
+                    PostInfosToService();
+                }
+
             }
 
-            if (!mBlobShowImageVal.isEmpty()){
 
-                PostInfosToService();
-            }
 
            // Toast.makeText(getActivity(),mBlobShowImageVal,Toast.LENGTH_SHORT).show();
         }
@@ -333,25 +337,7 @@ private  void InfosClear(){
 Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).show();
 
                 InfosClear();
-//
-//                Timer timer=new Timer();
-//                TimerTask task=new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        MainActivity activity=(MainActivity)getActivity();
-//
-//                        FragmentManager fragmentManager = activity.getSupportFragmentManager();
-//                        final FragmentTransaction trasaction = fragmentManager.beginTransaction();
-//
-//                        MyBlobsFragment   mBlobFragment = new MyBlobsFragment();
-//                        trasaction.replace(R.id.main_frameLayout, mBlobFragment);
-//                        trasaction.commit();
-//
-//
-//
-//                    }
-//                };
-//                timer.schedule(task,1000*1);
+
 
             }
             else
@@ -468,7 +454,7 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
     private void openAlbum(){
 
         Intent intent=new Intent("android.intent.action.GET_CONTENT");
-        intent.setType("'application/octet-stream");
+        intent.setType("image/*");
         startActivityForResult(intent,CHOOSE_PHOTO);
     }
 

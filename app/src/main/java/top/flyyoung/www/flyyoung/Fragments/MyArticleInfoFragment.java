@@ -13,6 +13,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ private Toolbar articleInfosToolbar;
     private TextView mArticleTitle;
     private  TextView mArticleDate;
     private TextView mArticleCount;
-    private TextView mArticleContent;
+    private WebView mArticleContent;
 
     @Nullable
     @Override
@@ -52,7 +53,7 @@ private Toolbar articleInfosToolbar;
         mArticleTitle=(TextView)view.findViewById(R.id.articleInfos_Title);
         mArticleDate=(TextView)view.findViewById(R.id.articleInfos_Date);
         mArticleCount=(TextView)view.findViewById(R.id.articleInfos_ReadCount);
-        mArticleContent=(TextView)view.findViewById(R.id.articleInfos_Content);
+        mArticleContent=(WebView) view.findViewById(R.id.articleInfos_Content);
 
         Bundle bundle=getArguments();
         if (bundle!=null){
@@ -146,11 +147,9 @@ private Toolbar articleInfosToolbar;
             mArticleDate.setText("时间："+ mArticle.getCreateDate().toString()+" "+mArticle.getCreateTime().toString());
             mArticleCount.setText("阅读："+Integer.toString(mArticle.getReadCount()) );
 
-            if (Build.VERSION.SDK_INT >= 24) {
-                mArticleContent.setText(Html.fromHtml(mArticle.getArticleContent(),1) );
-            } else {
-                mArticleContent.setText( Html.fromHtml(mArticle.getArticleContent()));
-            }
+            //mArticleContent.getSettings().setDefaultTextEncodingName("utf-8");
+                mArticleContent.loadData(mArticle.getArticleContent(),"text/html; charset=utf-8",null) ;
+
 
 
         }

@@ -2,10 +2,13 @@ package top.flyyoung.www.flyyoung.Datas;
 
 /**
  * Created by 69133 on 2017/1/13.
+ * Article/PostImage
+ * Article/Post
  */
 
 public class Article {
     private  int ID;
+    private  int ArticleCatalogID;
     private  String ArticleTitle;
     private String  ArticleDescription;
     private  String  CreateDate;
@@ -17,6 +20,13 @@ public class Article {
     private String ArticleContent;
     private  Boolean ShowCustomer;
 
+    public int getArticleCatalogID() {
+        return ArticleCatalogID;
+    }
+
+    public void setArticleCatalogID(int articleCatalogID) {
+        ArticleCatalogID = articleCatalogID;
+    }
 
     public void setReadCount(int readCount) {
         ReadCount = readCount;

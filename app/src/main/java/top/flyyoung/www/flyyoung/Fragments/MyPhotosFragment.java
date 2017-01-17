@@ -90,7 +90,7 @@ public class MyPhotosFragment extends Fragment {
                 FragmentTransaction transaction=fragmentManager.beginTransaction();
 
                 transaction.replace(R.id.main_frameLayout,addPhotoFragment);
-               // transaction.addToBackStack(null);
+                transaction.addToBackStack(null);
                 transaction.commit();
 
 

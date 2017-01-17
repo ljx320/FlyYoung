@@ -258,11 +258,12 @@ mMainActivity.setSupportActionBar(mAddPhotoToolbar);
                     MyPhotosFragment photosFragment=new MyPhotosFragment();
 
                     Bundle bundle=new Bundle();
-                   bundle.putString("albumName", mAlbumName);
+                    bundle.putString("albumName", mAlbumName);
                     bundle.putInt("albumID",mAlbumID);
                     photosFragment.setArguments(bundle);
 
                     transaction.replace(R.id.main_frameLayout,photosFragment);
+                    transaction.addToBackStack(null);
                     transaction.commit();
 
                 }

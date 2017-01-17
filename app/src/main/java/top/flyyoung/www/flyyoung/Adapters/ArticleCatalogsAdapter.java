@@ -85,7 +85,7 @@ private  MainActivity mainActivity;
                 bundle.putInt("catalogID",catalog.getID());
                 fragment.setArguments(bundle);
                 transaction.replace(R.id.main_frameLayout,fragment);
-
+                transaction.addToBackStack(null);
                 transaction.commit();
 
 

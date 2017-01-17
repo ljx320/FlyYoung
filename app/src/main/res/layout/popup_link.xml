@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="@dimen/blob_SelectedImage"
+    android:layout_height="@dimen/blob_SelectedImage">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/popup_link_url"
+        android:hint="@string/link_url"
+
+        android:layout_margin="@dimen/article_catalog_size"
+        android:padding="@dimen/blob_item_margin"
+        android:background="@drawable/edit_bg"
+
+        android:inputType="textUri"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/popup_link_name"
+        android:hint="@string/link_name"
+        android:layout_margin="@dimen/article_catalog_size"
+        android:padding="@dimen/blob_item_margin"
+        android:background="@drawable/edit_bg"
+
+        android:inputType="text"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/article_catalog_size"
+        android:padding="@dimen/blob_item_margin"
+        android:text="@string/link_Sure"
+        android:id="@+id/popup_link_sure"
+        />
+
+
+
+
+</LinearLayout>

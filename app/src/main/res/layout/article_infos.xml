@@ -34,6 +34,7 @@
         android:ellipsize="end"
         android:layout_margin="@dimen/blob_item_margin"
         android:id="@+id/articleInfos_Title"
+        android:textSize="@dimen/blob_wetaher"
         />
 
     <LinearLayout
@@ -49,7 +50,7 @@
             android:id="@+id/articleInfos_Date"
             android:text="2017-01-13 09:33"
             android:layout_marginRight="@dimen/blob_item_margin"
-            android:textSize="@dimen/article_catalog_size"
+
             />
 
         <TextView
@@ -57,21 +58,29 @@
             android:layout_height="wrap_content"
             android:id="@+id/articleInfos_ReadCount"
             android:text="0"
-            android:textSize="@dimen/article_catalog_size"
+
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             />
 
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/articleInfos_Content"
-        android:layout_marginTop="@dimen/article_catalog_size"
-        android:text="文章内容"
-        android:padding="@dimen/blob_item_margin"
-        android:autoLink="web"
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/articleInfos_Content"-->
+        <!--android:layout_marginTop="@dimen/article_catalog_size"-->
+        <!--android:text="文章内容"-->
+        <!--android:padding="@dimen/blob_item_margin"-->
+        <!--android:autoLink="web"-->
 
-        />
+        <!--/>-->
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:padding="@dimen/blob_item_margin"
+        android:id="@+id/articleInfos_Content"
+        ></WebView>
 
 
 </LinearLayout>
