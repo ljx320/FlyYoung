@@ -20,8 +20,8 @@ import okhttp3.RequestBody;
  */
 
 public class HttpUtil {
-    private static final String WEBHOST_ADDRESS = "http://www.qidayang.top/api/";
-    public static final String WEBHOST = "http://www.qidayang.top";
+    private static final String WEBHOST_ADDRESS = "http://www.flyyoung.top/api/";
+    public static final String WEBHOST = "http://www.flyyoung.top";
 
     private static final String[][] MIME_MapTable={
             //{后缀名，    MIME类型}
