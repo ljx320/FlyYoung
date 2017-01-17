@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -213,13 +214,14 @@ mDwonloadFileResult=(TextView)view.findViewById(R.id.addDownload_fileresult);
         HttpUtil.PostJson(address, json, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Log.d("result", "failed");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                     if (response.isSuccessful())
                     {
+                        Log.d("result", response.body().string());
 
                         mMakeFileResult=new Gson().fromJson(response.body().string(),Boolean.class);
 
@@ -229,7 +231,7 @@ mDwonloadFileResult=(TextView)view.findViewById(R.id.addDownload_fileresult);
                     }
                 else
                     {
-
+                        Log.d("result", "failed");
 
                     }
             }
