@@ -72,26 +72,26 @@ public class AddBlobFragment extends Fragment {
     private Toolbar mAddBlobToolbar;
     private Button mAddBlobSureButton;
     private Button mAddBlobImageCamera;
-private ImageView mAddBlobWeatherImage;
+    private ImageView mAddBlobWeatherImage;
     private TextView mAddBlobMyLocation;
-private TextView mAddBlobWeatherVal;
+    private TextView mAddBlobWeatherVal;
     private LocationClient mLocationClient;
     private Button mAdBlobAddImageButton;
-private EditText mAddBlobContent;
+    private EditText mAddBlobContent;
     private Context mContext;
     private Activity mActivity;
 
-    private  String mWeatherImage;
+    private String mWeatherImage;
     private ImageView mAddBlobSelectedImage;
 
-    private final int TAKE_PHOTO=7;
-    private final  int CHOOSE_PHOTO=6;
-    private final  int RESUL_OK=-1;
+    private final int TAKE_PHOTO = 7;
+    private final int CHOOSE_PHOTO = 6;
+    private final int RESUL_OK = -1;
     private Uri imageUri;
 
     private Bitmap mBlobShowImage;
 
-    private List<UploadFileResult>  mBlobShowImageResult;
+    private List<UploadFileResult> mBlobShowImageResult;
     private String mBlobShowImageVal;
 
     private Boolean PostBlobResult;
@@ -99,22 +99,22 @@ private EditText mAddBlobContent;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.add_blob,container,false);
-        mAdBlobAddImageButton=(Button)view.findViewById(R.id.addblob_addImageButton);
-        mAddBlobWeatherVal=(TextView)view.findViewById(R.id.AddBlob_weatherVal);
-        mAddBlobToolbar=(Toolbar) view.findViewById(R.id.addBlob_Toolbar);
-        mAddBlobSureButton=(Button)view.findViewById(R.id.addBlob_SureButton);
-        mAddBlobMyLocation=(TextView)view.findViewById(R.id.addBlob_myLocation);
+        View view = inflater.inflate(R.layout.add_blob, container, false);
+        mAdBlobAddImageButton = (Button) view.findViewById(R.id.addblob_addImageButton);
+        mAddBlobWeatherVal = (TextView) view.findViewById(R.id.AddBlob_weatherVal);
+        mAddBlobToolbar = (Toolbar) view.findViewById(R.id.addBlob_Toolbar);
+        mAddBlobSureButton = (Button) view.findViewById(R.id.addBlob_SureButton);
+        mAddBlobMyLocation = (TextView) view.findViewById(R.id.addBlob_myLocation);
         mAddBlobToolbar.setTitle(R.string.addblob_ToolBar);
         mAddBlobToolbar.setTitleTextColor(Color.WHITE);
-        mAddBlobWeatherImage=(ImageView)view.findViewById(R.id.addBlob_weatherImage);
-        mAddBlobSelectedImage=(ImageView)view.findViewById(R.id.addblob_SelectedImage);
-        mAddBlobImageCamera=(Button)view.findViewById(R.id.addblob_ImageCamera);
-        mAddBlobContent=(EditText)view.findViewById(R.id.addblob_blobContent);
-        mContext=getContext();
-        mActivity=getActivity();
+        mAddBlobWeatherImage = (ImageView) view.findViewById(R.id.addBlob_weatherImage);
+        mAddBlobSelectedImage = (ImageView) view.findViewById(R.id.addblob_SelectedImage);
+        mAddBlobImageCamera = (Button) view.findViewById(R.id.addblob_ImageCamera);
+        mAddBlobContent = (EditText) view.findViewById(R.id.addblob_blobContent);
+        mContext = getContext();
+        mActivity = getActivity();
 
-        mLocationClient=new LocationClient(mContext.getApplicationContext());
+        mLocationClient = new LocationClient(mContext.getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
 
         mAdBlobAddImageButton.setOnClickListener(new View.OnClickListener() {
@@ -127,64 +127,60 @@ private EditText mAddBlobContent;
         mAddBlobImageCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File outputImage=new File(getActivity().getExternalCacheDir(),"out_put.jpg");
-                try{
-                    if (outputImage.exists()){
+                File outputImage = new File(getActivity().getExternalCacheDir(), "out_put.jpg");
+                try {
+                    if (outputImage.exists()) {
 
                         outputImage.delete();
                     }
                     outputImage.createNewFile();
 
-                }catch (IOException e){
+                } catch (IOException e) {
 
                     e.printStackTrace();
                 }
 
-                if (Build.VERSION.SDK_INT>=24){
+                if (Build.VERSION.SDK_INT >= 24) {
 
-                    imageUri= FileProvider.getUriForFile(getActivity(),"top.flyyoung.www.flyyoung.fileprovider",outputImage);
-                }else
-                {
-                    imageUri=Uri.fromFile(outputImage);
+                    imageUri = FileProvider.getUriForFile(getActivity(), "top.flyyoung.www.flyyoung.fileprovider", outputImage);
+                } else {
+                    imageUri = Uri.fromFile(outputImage);
 
                 }
 
-                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                startActivityForResult(intent,TAKE_PHOTO);
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(intent, TAKE_PHOTO);
             }
         });
 
 
-
         LoadWeatherImage();
 
-        List<String> permissionList=new ArrayList<>();
+        List<String> permissionList = new ArrayList<>();
 
-        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
 
         }
 
-        if (ContextCompat.checkSelfPermission(mActivity,Manifest.permission.READ_PHONE_STATE)!=PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
 
             permissionList.add(Manifest.permission.READ_PHONE_STATE);
         }
 
-        if (ContextCompat.checkSelfPermission(mActivity,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         }
 
-        if (!permissionList.isEmpty()){
-            String[] permissions=permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(mActivity,permissions,1);
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(mActivity, permissions, 1);
 
-        }
-        else
-        {
+        } else {
             requestLocation();
 
         }
@@ -192,44 +188,44 @@ private EditText mAddBlobContent;
         mAddBlobSureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String blobContent=mAddBlobContent.getText().toString();
+                String blobContent = mAddBlobContent.getText().toString();
 
-                if ("".equals(blobContent)){
+                if ("".equals(blobContent)) {
 
-                    Toast.makeText(getActivity(),R.string.Addblob_WarnigNoContent,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.Addblob_WarnigNoContent, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (mBlobShowImage==null){
-                    Toast.makeText(getActivity(),R.string.Addblob_WarnigNoImage,Toast.LENGTH_SHORT).show();
+                if (mBlobShowImage == null) {
+                    Toast.makeText(getActivity(), R.string.Addblob_WarnigNoImage, Toast.LENGTH_SHORT).show();
                     return;
 
                 }
-               String filePath= getBitmapPath(mBlobShowImage);
-                String address="Blob/PostImage";
+                String filePath = getBitmapPath(mBlobShowImage);
+                String address = "Blob/PostImage";
 
-               HttpUtil.uploadMultiFile(address, filePath, new Callback() {
-                   @Override
-                   public void onFailure(Call call, IOException e) {
+                HttpUtil.uploadMultiFile(address, filePath, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
 
-                   }
+                    }
 
-                   @Override
-                   public void onResponse(Call call, Response response) throws IOException {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
 
-                    //   Log.d("result", response.body().string());
-        if (response.isSuccessful()){
-               String responseResult=response.body().string();
+                        //   Log.d("result", response.body().string());
+                        if (response.isSuccessful()) {
+                            String responseResult = response.body().string();
 //           Log.d("result", responseResult);
-            mBlobShowImageResult=new Gson().fromJson(responseResult,new TypeToken<List<UploadFileResult>>(){}.getType());
-             new ImageUploadFinishiTask().execute();
-        }
-                       else {
+                            mBlobShowImageResult = new Gson().fromJson(responseResult, new TypeToken<List<UploadFileResult>>() {
+                            }.getType());
+                            new ImageUploadFinishiTask().execute();
+                        } else {
 
 
-        }
-                   }
-               });
+                        }
+                    }
+                });
 
 
             }
@@ -240,7 +236,7 @@ private EditText mAddBlobContent;
     }
 
 
-    class  ImageUploadFinishiTask extends  AsyncTask<Void,Integer,Boolean>{
+    class ImageUploadFinishiTask extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -251,10 +247,10 @@ private EditText mAddBlobContent;
         protected void onPostExecute(Boolean aBoolean) {
 
 
-            for (UploadFileResult result :mBlobShowImageResult){
-                mBlobShowImageVal=result.getName();
+            for (UploadFileResult result : mBlobShowImageResult) {
+                mBlobShowImageVal = result.getName();
 
-                if (!mBlobShowImageVal.isEmpty()){
+                if (!mBlobShowImageVal.isEmpty()) {
 
                     PostInfosToService();
                 }
@@ -262,25 +258,24 @@ private EditText mAddBlobContent;
             }
 
 
-
-           // Toast.makeText(getActivity(),mBlobShowImageVal,Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getActivity(),mBlobShowImageVal,Toast.LENGTH_SHORT).show();
         }
     }
 
-private  void InfosClear(){
+    private void InfosClear() {
 
-    mAddBlobContent.setText("");
-    mAddBlobSelectedImage.setVisibility(View.GONE);
+        mAddBlobContent.setText("");
+        mAddBlobSelectedImage.setVisibility(View.GONE);
 
-}
-    private  void PostInfosToService()
-    {
-        Blobs blob=new Blobs();
+    }
+
+    private void PostInfosToService() {
+        Blobs blob = new Blobs();
         blob.setBlobContent(mAddBlobContent.getText().toString());
         blob.setBlobImage(mBlobShowImageVal);
 
-        SimpleDateFormat dateString=new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeString=new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateString = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeString = new SimpleDateFormat("HH:mm");
 
 
         blob.setCreateDate(dateString.format(new Date()));
@@ -291,7 +286,7 @@ private  void InfosClear(){
         blob.setWeather(mAddBlobWeatherVal.getText().toString());
         blob.setBlobLocation(mAddBlobMyLocation.getText().toString());
 
-        String JsonResult=new Gson().toJson(blob,blob.getClass());
+        String JsonResult = new Gson().toJson(blob, blob.getClass());
 
         Log.d("blob", JsonResult);
 
@@ -303,15 +298,13 @@ private  void InfosClear(){
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    PostBlobResult=new Gson().fromJson(response.body().string(),Boolean.class);
+                    PostBlobResult = new Gson().fromJson(response.body().string(), Boolean.class);
 
                     new PostBlobResultTask().execute();
 
-                }
-                else
-                {
+                } else {
                     Log.d("blobresult", "failed");
 
                 }
@@ -321,7 +314,7 @@ private  void InfosClear(){
     }
 
 
-    class  PostBlobResultTask extends  AsyncTask<Void,Integer,Boolean>{
+    class PostBlobResultTask extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -330,19 +323,17 @@ private  void InfosClear(){
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-           // super.onPostExecute(aBoolean);
+            // super.onPostExecute(aBoolean);
 
-            if (PostBlobResult){
+            if (PostBlobResult) {
 
-Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.Addblob_makeSuccess, Toast.LENGTH_SHORT).show();
 
                 InfosClear();
 
 
-            }
-            else
-            {
-                Toast.makeText(getActivity(),R.string.Addblob_makeFailed,Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), R.string.Addblob_makeFailed, Toast.LENGTH_SHORT).show();
 
             }
         }
@@ -351,51 +342,45 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-
-
+        switch (requestCode) {
 
 
             case CHOOSE_PHOTO:
 
-                if (resultCode==RESUL_OK){
+                if (resultCode == RESUL_OK) {
 
-                    ContentResolver resolver=getContext().getContentResolver();
+                    ContentResolver resolver = getContext().getContentResolver();
 
-                    try{
-                        InputStream inputStream=resolver.openInputStream(data.getData());
-                        mBlobShowImage= BitmapFactory.decodeStream(inputStream);
+                    try {
+                        InputStream inputStream = resolver.openInputStream(data.getData());
+                        mBlobShowImage = BitmapFactory.decodeStream(inputStream);
 
                         mAddBlobSelectedImage.setImageBitmap(mBlobShowImage);
                         mAddBlobSelectedImage.setVisibility(View.VISIBLE);
 
 
-                    }
-                    catch (FileNotFoundException e){
+                    } catch (FileNotFoundException e) {
 
                         e.printStackTrace();
                     }
                 }
 
 
-
                 break;
             case TAKE_PHOTO:
 
 
-                if (resultCode==RESUL_OK){
-                    ContentResolver resolver=getContext().getContentResolver();
-                    try{
-                        mBlobShowImage=BitmapFactory.decodeStream(resolver.openInputStream(imageUri));
-
+                if (resultCode == RESUL_OK) {
+                    ContentResolver resolver = getContext().getContentResolver();
+                    try {
+                        mBlobShowImage = BitmapFactory.decodeStream(resolver.openInputStream(imageUri));
 
 
                         mAddBlobSelectedImage.setImageBitmap(mBlobShowImage);
                         mAddBlobSelectedImage.setVisibility(View.VISIBLE);
 
 
-                    }
-                    catch (FileNotFoundException e){
+                    } catch (FileNotFoundException e) {
 
                         e.printStackTrace();
                     }
@@ -407,60 +392,56 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
     }
 
 
-    private String getBitmapPath(Bitmap bitmap){
-        String filePath="";
-        FileOutputStream fileOutputStream=null;
+    private String getBitmapPath(Bitmap bitmap) {
+        String filePath = "";
+        FileOutputStream fileOutputStream = null;
 
-        try{
-            String saveDir= Environment.getExternalStorageDirectory()+"/Blob_Photos";
-            File dir=new File(saveDir);
+        try {
+            String saveDir = Environment.getExternalStorageDirectory() + "/Blob_Photos";
+            File dir = new File(saveDir);
 
-            if (!dir.exists()){
+            if (!dir.exists()) {
 
                 dir.mkdir();
             }
 
-            SimpleDateFormat t=new SimpleDateFormat("yyyyMMddhhmmssSSS");
-            String filename="BB"+(t.format(new Date()))+".jpg";
-            File file=new File(saveDir,filename);
+            SimpleDateFormat t = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+            String filename = "BB" + (t.format(new Date())) + ".jpg";
+            File file = new File(saveDir, filename);
 
-            fileOutputStream=new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
-            filePath=file.getPath();
+            fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            filePath = file.getPath();
 
 
-
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (fileOutputStream!=null){
-                try{
+        } finally {
+            if (fileOutputStream != null) {
+                try {
                     fileOutputStream.close();
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                     e.printStackTrace();
                 }
 
             }
 
-            return  filePath;
+            return filePath;
         }
 
     }
 
-    private void openAlbum(){
+    private void openAlbum() {
 
-        Intent intent=new Intent("android.intent.action.GET_CONTENT");
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
         intent.setType("image/*");
-        startActivityForResult(intent,CHOOSE_PHOTO);
+        startActivityForResult(intent, CHOOSE_PHOTO);
     }
 
-    private void LoadWeatherImage(){
+    private void LoadWeatherImage() {
 
-        String address="Weather/Get";
+        String address = "Weather/Get";
         HttpUtil.sendOkHttpRequest(address, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -469,9 +450,9 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    mWeatherImage=new Gson().fromJson(response.body().string(),String.class);
+                    mWeatherImage = new Gson().fromJson(response.body().string(), String.class);
 
                     new LoadWeatherTask().execute();
                 }
@@ -479,7 +460,7 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
         });
     }
 
-    class LoadWeatherTask extends AsyncTask<Void,Integer,Boolean>{
+    class LoadWeatherTask extends AsyncTask<Void, Integer, Boolean> {
 
 
         @Override
@@ -489,7 +470,7 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-           // super.onPostExecute(aBoolean);
+            // super.onPostExecute(aBoolean);
             mAddBlobWeatherVal.setText(mWeatherImage);
             Glide.with(mActivity).load(mWeatherImage).into(mAddBlobWeatherImage);
         }
@@ -498,14 +479,14 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1:
 
-                if (grantResults.length>0){
-                    for ( int result:grantResults){
-                        if (result!=PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0) {
+                    for (int result : grantResults) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
 
-                            Toast.makeText(mActivity,"您已经拒绝了位置请求",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, "您已经拒绝了位置请求", Toast.LENGTH_SHORT).show();
 
                             return;
                         }
@@ -514,9 +495,8 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
 
                     requestLocation();
 
-                }else
-                {
-                    Toast.makeText(mActivity,"发生了未知的错误",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mActivity, "发生了未知的错误", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -533,34 +513,33 @@ Toast.makeText(getActivity(),R.string.Addblob_makeSuccess,Toast.LENGTH_SHORT).sh
         mLocationClient.stop();
     }
 
-    private void  requestLocation(){
+    private void requestLocation() {
         initLocation();
         mLocationClient.start();
     }
 
 
-    private void initLocation(){
+    private void initLocation() {
 
-        LocationClientOption option=new LocationClientOption();
-        option.setScanSpan(5000);
+        LocationClientOption option = new LocationClientOption();
+       // option.setScanSpan(5000);
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
 
     }
 
-    public class MyLocationListener implements BDLocationListener{
+    public class MyLocationListener implements BDLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            StringBuilder stringBuilder=new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.append(bdLocation.getCountry()).append(" ");
             stringBuilder.append(bdLocation.getProvince()).append(" ");
             stringBuilder.append(bdLocation.getCity()).append(" ");
             stringBuilder.append(bdLocation.getDistrict()).append(" ");
             stringBuilder.append(bdLocation.getStreet()).append(" ");
-            stringBuilder.append( bdLocation.getStreetNumber());
-
+            stringBuilder.append(bdLocation.getStreetNumber());
 
 
             mAddBlobMyLocation.setText(stringBuilder);
